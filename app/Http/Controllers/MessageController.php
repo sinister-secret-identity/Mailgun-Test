@@ -8,7 +8,6 @@ use App\Models\Message;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Mailable;
 use App\Mail\SendMail;
-
 use Mailgun\Mailgun;
 
 class MessageController extends Controller
