@@ -1,7 +1,7 @@
 <div>	
     <div x-data="{ current: null, showModal: false }">
     <div class="w-full flex justify-center px-32 mb-5">
-        <input wire:model="search" id="search" name="search" type="text" class="appearance-none block w-96 px-3 py-2 m-5 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-" placeholder="Search query ..." />
+        <input wire:model="search" id="search" name="search" type="text" class="appearance-none block w-96 px-3 py-2 m-5 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-" placeholder="Sent to ..." />
     </div>
 
     <div class="bg-white min-w-0 flex-1 px-32 mb-5">

@@ -22,13 +22,12 @@ class ShowEmails extends Component
 
     public function render()
     {
-        //return view('livewire.show-emails');
         return view('livewire.show-emails', [
             'emails' => Message::where([
                 ['user_id', '=', Auth::id()],
                 ['to', 'like', '%'.$this->search.'%']
             ])
-            ->orderBy('created_at', 'DESC')
+            ->latest()
             ->paginate(10)
         ]);
     }

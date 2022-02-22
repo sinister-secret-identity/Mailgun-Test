@@ -14,19 +14,32 @@ class MessageController extends Controller
 {
     public function store(Request $request)
     {
-        if($request->validate([
-            'to' => 'regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'
-        ]))
+        $validated = $request->validate([
+            'to' => 'regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
+            'subject' => 'required',
+            'message' => ['required', 'max:140']
+        ]);
+
+        $lastMessage = Message::currentUser()
+        ->where('created_at', '>', date('Y-m-d H:i:s', strToTime('-15 seconds')))
+        ->orderBy('created_at', 'desc')
+        ->first();
+
+        if($lastMessage)
+        {
+            $status = 'Spam - please allow 15 seconds between emails';
+        }
+        else
         {
             $createNew = new Message;
             $createNew->user_id = Auth::id();
-            $createNew->to = $request->to;
-            $createNew->subject = $request->subject;
-            $createNew->message = $request->message;
+            $createNew->to = $validated['to'];
+            $createNew->subject = $validated['subject'];
+            $createNew->message = $validated['message'];
             $createNew->save();
-    
+
             $result = $this->send($createNew);
-    
+
             if($result)
             {
                 // Update it
@@ -42,12 +55,8 @@ class MessageController extends Controller
             $createNew->mailgun_status = $status;
             $createNew->save();
         }
-        else
-        {
-            $status = 'invalid email address';
-        }
-
-        return redirect('create-email')->with('status', $status);
+        return redirect('create-email')
+        ->with('status', $status);
     }
 
     public function send($message) {
@@ -71,5 +80,4 @@ class MessageController extends Controller
         }
         return ['id' => $id, 'message' => $message];
     }
-
 }

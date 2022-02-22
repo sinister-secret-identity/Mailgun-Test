@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ShowEmails;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\WebHookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,19 +27,19 @@ use App\Http\Controllers\MessageController;
 */
 
 Route::view('/', 'welcome')->name('home');
-Route::view('/create-email', 'create-email')->name('create-email');
-Route::view('/history', 'history')->name('history');
+Route::view('/create-email', 'create-email')->name('create-email')->middleware('auth');
 
 //Route::get("send-email", [EmailController::class, "sendEmail"]);
-Route::post('store-email', [MessageController::class, 'store']);
+Route::post('store-email', [MessageController::class, 'store'])->middleware('auth');
 
-Route::post('webhooks/email_delivered','WebhookController@emailDelivered');
-Route::post('webhooks/email_opened','WebhookController@emailOpened');
-Route::post('webhooks/email_clicked','WebhookController@emailClicked');
-Route::post('webhooks/fail_temp','WebhookController@failTemp');
-Route::post('webhooks/fail_perm','WebhookController@failPerm');
-Route::post('webhooks/unsubscribe','WebhookController@unsubscribe');
-Route::post('webhooks/spam','WebhookController@spam');
+Route::post('webhooks/mailgunHandler', [WebHookController::class, 'mailgunHandler']);
+//Route::get('webhooks/email_delivered', [WebHookController::class, 'emailDelivered']);
+//Route::post('webhooks/email_opened','WebhookController@emailOpened');
+//Route::post('webhooks/email_clicked','WebhookController@emailClicked');
+//Route::post('webhooks/fail_temp','WebhookController@failTemp');
+//Route::post('webhooks/fail_perm','WebhookController@failPerm');
+//Route::post('webhooks/unsubscribe','WebhookController@unsubscribe');
+//Route::post('webhooks/spam','WebhookController@spam');
 
 
 Route::get('/show-emails', ShowEmails::class)
