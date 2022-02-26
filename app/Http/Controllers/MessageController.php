@@ -80,4 +80,9 @@ class MessageController extends Controller
         }
         return ['id' => $id, 'message' => $message];
     }
+
+    public function history()
+    {
+        return view('messages.history');
+    }
 }

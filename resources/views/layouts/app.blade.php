@@ -5,7 +5,7 @@
             <div class="space-x-4">
                 @auth
                     <a href="{{ route('create-email') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">Send Email</a>
-                    <a href="{{ route('emails') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">Show Emails</a>
+                    <a href="/history" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">Show Emails</a>
                     <a
                         href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"

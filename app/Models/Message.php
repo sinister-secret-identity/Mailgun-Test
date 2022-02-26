@@ -19,4 +19,13 @@ class Message extends Model
         return $query->where('user_id', '=', Auth::id());
     }
 
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+        : static::query()
+            ->where('to', 'like', '%'.$search.'%')
+            ->orWhere('subject', 'like', '%'.$search.'%')
+            ->orWhere('mailgun_status', 'like', '%'.$search.'%')
+            ->orWhere('created_at', 'like', '%'.$search.'%');
+    }
 }
