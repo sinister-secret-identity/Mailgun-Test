@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ url(mix('css/app.css')) }}">
+        <script src="https://cdn.tailwindcss.com"></script>
         @livewireStyles
 
         <!-- Scripts -->

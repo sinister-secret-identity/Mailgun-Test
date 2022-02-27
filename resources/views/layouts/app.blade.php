@@ -1,22 +1,36 @@
 @extends('layouts.base')
-<div class="flex flex-col justify-center min-h-30 py-12 bg-gray-50 sm:px-6 lg:px-8">
+<style>
+    .rotated {
+        transform: rotate(90deg);
+        display: inline-block;
+    }
+</style>
+<div class="flex flex-col justify-center min-h-10 py-10 sm:px-6 lg:px-8">
     <div class="absolute top-0 right-0 mt-4 mr-4">
         @if (Route::has('login'))
             <div class="space-x-4">
                 @auth
-                    <a href="{{ route('create-email') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">Send Email</a>
-                    <a href="{{ route('emails') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">Show Emails</a>
-                    <a
-                        href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                        class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
-                    >
-                        Log out
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                    <div x-data="{ open: false }" x-on:click.outside="open = false" class="font-medium text-indigo-600">
+                        <button x-on:click="open = !open">
+                            Menu
+                            <span :class="{'rotated': open}">&raquo;</span>
+                        </button>
+                        <ul x-show="open" x-transition.opacity>
+                            <li class="hover:text-indigo-500 focus:outline-none focus:underline"><a href="{{ route('create-email') }}">Send</a></li>
+                            <li class="hover:text-indigo-500 focus:outline-none focus:underline"><a href="/history">History</a></li>
+                            <li> </li>
+                            <li class="hover:text-indigo-500 focus:outline-none focus:underline"><a
+                                href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Log out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
                 @else
                     <a href="{{ route('login') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">Log in</a>
 

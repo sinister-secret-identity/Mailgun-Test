@@ -28,9 +28,8 @@ use App\Http\Controllers\WebHookController;
 
 Route::view('/', 'welcome')->name('home');
 Route::view('/create-email', 'create-email')->name('create-email')->middleware('auth');
-
-//Route::get("send-email", [EmailController::class, "sendEmail"]);
 Route::post('store-email', [MessageController::class, 'store'])->middleware('auth');
+Route::get('history', [MessageController::class, 'history'])->middleware('auth');
 
 Route::post('webhooks/mailgunHandler', [WebHookController::class, 'mailgunHandler']);
 //Route::get('webhooks/email_delivered', [WebHookController::class, 'emailDelivered']);
@@ -42,9 +41,9 @@ Route::post('webhooks/mailgunHandler', [WebHookController::class, 'mailgunHandle
 //Route::post('webhooks/spam','WebhookController@spam');
 
 
-Route::get('/show-emails', ShowEmails::class)
-    ->name('emails')
-    ->middleware('auth');
+//Route::get('/show-emails', ShowEmails::class)
+//    ->name('emails')
+//    ->middleware('auth');
 
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)
